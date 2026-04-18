@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="./assets/CSS/style.css">
+</head>
+
+<body>
+
+	<header class="cabecalho">
+		<div class="container-cabecalho">
+
+			<div class="logo-area">
+				<div class="logo-icon">📝</div>
+
+				<div class="nomeProjeto">
+					<span class="subtitulo">Workspace Notal</span>
+					<h1>Gestão de Bloco de Notas</h1>
+				</div>
+			</div>
+
+			<div class="acoes-topo">
+				<button class="btn-busca">🔍</button>
+
+				<div class="adicionaBloco">
+					<span>Nova Nota</span>
+					<button class="btn-adicionaBloco" onclick="">+</button>
+				</div>
+			</div>
+
+		</div>
+	</header>
+
+
+	<section class="hero-topo">
+		<div class="hero-card">
+			<h2>Organize ideias, tarefas e lembretes</h2>
+			<p>Crie blocos rápidos, personalize cores e mantenha tudo salvo em um só lugar.</p>
+		</div>
+	</section>
+
+
+	<section class="section-desativada">
+
+		<div class="container-input-bloco">
+			
+			<div class="bloco-de-input">
+				
+				<div class="bloco-btn-fecha-cria-nota">
+					<button class="btn-fecha-cria-nota">❌</button>
+				</div>
+
+				<div class="titulo-form">
+					<h3>Criar nova nota</h3>
+					<span>Preencha as informações abaixo</span>
+				</div>
+
+				<div class="ajuste-itulo-cor">
+
+					<div class="padrao-layout">
+						<div class="container-padrao-layout">
+							<label>Título</label>
+							<input type="text" class="titulo" placeholder="Ex: Comprar mercado">
+						</div>
+					</div>
+
+					<div class="padrao-layout">
+						<div class="container-padrao-layout">
+							<label>Cor</label>
+							<input type="color" class="cor-de-fundo">
+						</div>
+					</div>
+
+				</div>
+
+				<div class="ajuste-descricao-nota">
+					<label>Descrição</label>
+					<textarea class="notas" placeholder="Digite suas anotações..."></textarea>
+				</div>
+
+				<div class="bloco-btn-salvar">
+					<div id="modalFeedback" class="faltouInfo"></div>
+					<button class="btn-salvar">Salvar Nota</button>
+				</div>
+
+
+			</div>
+
+		</div>
+
+	</section>
+
+
+	<section class="corpo-do-site">
+
+	</section>
+
+
+	<footer class="footer">
+		<div class="container-footer">
+			Desenvolvido por Jeciel Treska da Silva
+		</div>
+	</footer>
+
+	<script src="./assets/JS/main.js"></script>
+</body>
+
+</html>
