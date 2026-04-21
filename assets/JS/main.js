@@ -1,9 +1,24 @@
+const campoBusca = document.querySelector('.input-busca');
 const btnAddBloco = document.querySelector('.btn-adicionaBloco');
 const altdisplay = document.querySelector('.section-desativada');
-const btnFechaCriaNotas = document.querySelector('.btn-fecha-cria-nota');
+const btnFechaCriaNotas = altdisplay.querySelector('.btn-fecha-cria-nota');
 const btnSalvaNota = document.querySelector('.btn-salvar');
 const gridNotas = document.querySelector('.corpo-do-site');
 const feedback = document.querySelector('#modalFeedback');
+
+const btnBusca = document.querySelector('.btn-busca');
+const containerBusca = document.querySelector('.container-busca');
+const inputBusca = document.querySelector('.input-busca');
+const btnFechaBusca = document.querySelector('.btn-fecha-busca');
+
+
+const displayEditaNts = document.querySelector('.section-desativada-carrega-edita-nota');
+const btnFechaEditaNotas = displayEditaNts.querySelector('.btn-fecha-cria-nota');
+const btnSalvaEdicao = document.querySelector('.btn-salvar2');
+const feedbackEdita = displayEditaNts.querySelector('#modalFeedback');
+
+let notaEditando = null;
+
 
 
 /*ABRIR / FECHAR MENU*/
@@ -35,6 +50,9 @@ btnFechaCriaNotas.addEventListener('click', () => {
   altdisplay.classList.remove('ativo');
 });
 
+btnFechaEditaNotas.addEventListener('click', () => {
+  displayEditaNts.classList.remove('section-carrega-edita-nota');
+});
 
 /*CRIAR NOTA*/
 function criaNota(tituloFun, notasFun, corFun) {
@@ -58,9 +76,9 @@ function criaNota(tituloFun, notasFun, corFun) {
 
 /* PEGAR INPUTS*/
 function recebeValorInput() {
-  const titulo = document.querySelector('.titulo').value.trim();
-  const notas = document.querySelector('.notas').value.trim();
-  const cor = document.querySelector('.cor-de-fundo').value || '#ffffff';
+  const titulo = altdisplay.querySelector('.titulo').value.trim();
+  const notas = altdisplay.querySelector('.notas').value.trim();
+  const cor = altdisplay.querySelector('.cor-de-fundo').value || '#ffffff';
 
   if (!titulo || !notas) {
     feedback.textContent = 'Preencha todos os campos!';
@@ -90,29 +108,102 @@ btnSalvaNota.addEventListener('click', () => {
 /*EXCLUIR / EDITAR*/
 document.addEventListener('click', (e) => {
   const el = e.target;
-  
+
   /* EXCLUIR */
   if (el.classList.contains('btn-exclui-nota')) {
     el.closest('.nota').remove();
     salvarNotas();
   }
-  
+
   /* EDITAR */
   if (el.classList.contains('btn-edita-nota')) {
-    const nota = el.closest('.nota');
-    
-    const tituloAtual = nota.querySelector('h3').innerText;
-    const textoAtual = nota.querySelector('p').innerText;
-    
-    const novoTitulo = prompt('Editar título:', tituloAtual);
-    const novoTexto = prompt('Editar nota:', textoAtual);
-    
-    if (novoTitulo !== null && novoTexto !== null) {
-      nota.querySelector('h3').innerText = novoTitulo;
-      nota.querySelector('p').innerText = novoTexto;
-      salvarNotas();
-    }
+    notaEditando = el.closest('.nota');
+    altdisplay.classList.toggle('ativo');
+    displayEditaNts.classList.add('section-carrega-edita-nota');
+
+    const tituloAtual = notaEditando.querySelector('h3').innerText;
+    const textoAtual = notaEditando.querySelector('p').innerText;
+    const corAtual = getComputedStyle(notaEditando).getPropertyValue('--cor-nota').trim();
+
+    displayEditaNts.querySelector('.edita-titulo').value = tituloAtual;
+    displayEditaNts.querySelector('.edita-notas').value = textoAtual;
+    displayEditaNts.querySelector('.edita-cor-de-fundo').value = corAtual;
+
+
+    displayEditaNts.style.animation = 'none';
+    displayEditaNts.offsetHeight;
+    displayEditaNts.style.animation = 'menuSuave 0.5s ease';
+
   }
+});
+
+// abrir busca
+btnBusca.addEventListener('click', () => {
+  containerBusca.classList.add('ativo');
+  inputBusca.focus();
+});
+
+
+// fechar busca
+btnFechaBusca.addEventListener('click', () => {
+  containerBusca.classList.remove('ativo');
+  inputBusca.value = '';
+  filtrarNotas('');
+});
+
+
+// buscar digitando
+inputBusca.addEventListener('input', () => {
+  filtrarNotas(inputBusca.value);
+});
+
+
+// função filtro
+function filtrarNotas(valor) {
+  const busca = valor.toLowerCase();
+
+  const notas = document.querySelectorAll('.nota');
+
+  notas.forEach((nota) => {
+
+    const titulo = nota.querySelector('h3').innerText.toLowerCase();
+
+    const texto = nota.querySelector('p').innerText.toLowerCase();
+
+    const encontrou = titulo.includes(busca) || texto.includes(busca);
+
+    nota.style.display = encontrou ? 'flex' : 'none';
+  });
+}
+
+/* SALVAR EDICAO*/
+btnSalvaEdicao.addEventListener('click', () => {
+
+  const novoTitulo =
+    displayEditaNts.querySelector('.edita-titulo').value.trim();
+
+  const novoTexto =
+    displayEditaNts.querySelector('.edita-notas').value.trim();
+
+  const novaCor =
+    displayEditaNts.querySelector('.edita-cor-de-fundo').value || '#ffffff';
+
+  if (!novoTitulo || !novoTexto) {
+    feedbackEdita.textContent = 'Preencha todos os campos!';
+    return;
+  }
+
+  notaEditando.querySelector('h3').textContent = novoTitulo;
+  notaEditando.querySelector('p').textContent = novoTexto;
+
+  notaEditando.style.setProperty('--cor-nota', novaCor);
+
+  salvarNotas();
+
+  feedbackEdita.textContent = '';
+
+  displayEditaNts.classList.remove('section-carrega-edita-nota');
+
 });
 
 

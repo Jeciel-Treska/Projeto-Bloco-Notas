@@ -78,6 +78,54 @@ body{
   gap:14px;
 }
 
+.container-busca{
+  display:flex;
+  align-items:center;
+  gap:5px;
+
+  width:0;
+  overflow:hidden;
+
+  opacity:0;
+  transition:.35s ease;
+}
+
+.container-busca.ativo{
+  width:280px;
+  opacity:1;
+}
+
+.input-busca{
+  width:100%;
+  padding:0px 16px;
+  border:none;
+  border-radius:14px;
+  background:#fff;
+  box-shadow:var(--shadow);
+  outline:none;
+}
+
+.btn-fecha-busca{
+  border:none;
+  background:#fff;
+  width:47px;
+  height:42px;
+  border-radius:12px;
+  cursor:pointer;
+  box-shadow:var(--shadow);
+}
+
+@media(max-width:768px){
+
+  .container-busca.ativo{
+    width:100%;
+  }
+
+  .acoes-topo{
+    flex-wrap:wrap;
+  }
+}
+
 .btn-busca{
   width:52px;
   height:52px;
@@ -181,14 +229,17 @@ body{
 }
 
 .ajuste-itulo-cor{
-  display:flex;
-  justify-content: space-around;
-  gap:20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
   padding: 0 20px;
+  flex-wrap: wrap;
 }
 
 .padrao-layout{
   display:flex;
+  flex: 1;
+  min-width: 250px;
 }
 .container-padrao-layout{
 	display: flex;
@@ -210,7 +261,7 @@ textarea{
   border: 1px solid #111827;
 }
 
-.cor-de-fundo{
+.cor-de-fundo, .edita-cor-de-fundo{
   height:50px;
   border:none;
   border-radius:14px;
@@ -235,7 +286,7 @@ textarea{
   justify-content:space-between;
 }
 
-.btn-salvar{
+.btn-salvar, .btn-salvar2{
   border:none;
   padding:14px 28px;
   border-radius:14px;
@@ -257,6 +308,33 @@ textarea{
   font-size: 1.7rem;
   cursor: pointer;
   background: transparent;
+}
+
+/* EDITA */
+.section-desativada-carrega-edita-nota{
+  display: none;
+}
+.section-carrega-edita-nota{
+  position: fixed;
+  inset: 0;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  background: rgba(0,0,0,.45);
+
+  z-index:999;
+}
+.constainer-carrega-edita-nota{
+  width: 80%;
+  max-width: 1400px;
+  margin: 0px auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99;
 }
 
 /* GRID */
@@ -324,6 +402,7 @@ textarea{
   font-size: 1.2rem;
   border: none;
   cursor: pointer;
+  background: transparent;
 }
 
 /* FOOTER */
@@ -344,7 +423,11 @@ textarea{
 }
 
 /* RESPONSIVO */
-
+@media (max-width:400px) {
+  .titulo-form span{
+    font-size: 0.94rem;
+  }
+}
 @media(max-width:768px){
 
   .container-cabecalho{
