@@ -15,7 +15,7 @@ const btnFechaBusca = document.querySelector('.btn-fecha-busca');
 const displayEditaNts = document.querySelector('.section-desativada-carrega-edita-nota');
 const btnFechaEditaNotas = displayEditaNts.querySelector('.btn-fecha-cria-nota');
 const btnSalvaEdicao = document.querySelector('.btn-salvar2');
-const feedbackEdita = displayEditaNts.querySelector('#modalFeedback');
+const feedbackEdita = displayEditaNts.querySelector('#modalFeedback2');
 
 let notaEditando = null;
 
@@ -23,6 +23,7 @@ let notaEditando = null;
 
 /*ABRIR / FECHAR MENU*/
 btnAddBloco.addEventListener('click', () => {
+  containerBusca.classList.remove('ativo');
   altdisplay.classList.toggle('ativo');
 
   const estaAtivo = altdisplay.classList.contains('ativo');
@@ -118,7 +119,10 @@ document.addEventListener('click', (e) => {
   /* EDITAR */
   if (el.classList.contains('btn-edita-nota')) {
     notaEditando = el.closest('.nota');
-    altdisplay.classList.toggle('ativo');
+    const estaAtivo = altdisplay.classList.contains('ativo');
+    if (estaAtivo) {
+      altdisplay.classList.toggle('ativo');
+    }
     displayEditaNts.classList.add('section-carrega-edita-nota');
 
     const tituloAtual = notaEditando.querySelector('h3').innerText;
@@ -139,6 +143,10 @@ document.addEventListener('click', (e) => {
 
 // abrir busca
 btnBusca.addEventListener('click', () => {
+  const estaAtivo = altdisplay.classList.contains('ativo');
+  if (estaAtivo) {
+    altdisplay.classList.toggle('ativo');
+  }
   containerBusca.classList.add('ativo');
   inputBusca.focus();
 });
@@ -167,9 +175,7 @@ function filtrarNotas(valor) {
   notas.forEach((nota) => {
 
     const titulo = nota.querySelector('h3').innerText.toLowerCase();
-
     const texto = nota.querySelector('p').innerText.toLowerCase();
-
     const encontrou = titulo.includes(busca) || texto.includes(busca);
 
     nota.style.display = encontrou ? 'flex' : 'none';
@@ -179,14 +185,11 @@ function filtrarNotas(valor) {
 /* SALVAR EDICAO*/
 btnSalvaEdicao.addEventListener('click', () => {
 
-  const novoTitulo =
-    displayEditaNts.querySelector('.edita-titulo').value.trim();
+  const novoTitulo = displayEditaNts.querySelector('.edita-titulo').value.trim();
 
-  const novoTexto =
-    displayEditaNts.querySelector('.edita-notas').value.trim();
+  const novoTexto = displayEditaNts.querySelector('.edita-notas').value.trim();
 
-  const novaCor =
-    displayEditaNts.querySelector('.edita-cor-de-fundo').value || '#ffffff';
+  const novaCor = displayEditaNts.querySelector('.edita-cor-de-fundo').value || '#ffffff';
 
   if (!novoTitulo || !novoTexto) {
     feedbackEdita.textContent = 'Preencha todos os campos!';
